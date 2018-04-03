@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <!-- Modal -->
+    {% include 'includes/_modal.html' %}
+    <script type="text/javascript">
+        function switchModalColor() {
+            $('#modal-header-tbc').toggleClass('myRedModal');
+            $('#modal-footer-tbc').toggleClass('myRedModal');
+            $('#modal-text-tbc').text('You Lost!')
+        }
+    </script>
+
+    <div class="container text-center">
+        <h1>Cat {{cat.id}}</h1>
+        <h1>{{cat.name}}</h1>
+        <div>
+            <img src="/static/images/{{cat.name}}.jpg" width="250">
+        </div>
+        <h1 style='color:red'>Price: {{cat.price}}</h1>
+        <button class="btn btn-outline-success my-2 my-sm-0" href="market">Back</button>
+            <div class="form-group mx-auto">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buy</button>
+            </div>
+
+    </div>
+
+{% endblock %}
