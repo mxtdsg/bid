@@ -12,13 +12,13 @@
 
     <div class="container text-center">
         <h1>Cat {{cat.id}}</h1>
-        <h1>{{cat.name}}</h1>
+        <h1 style='color:grey'>{{cat.name}}</h1>
         <div>
             <img src="/static/images/{{cat.name}}.jpg" width="250">
         </div>
         <h1 style='color:red'>Price: {{cat.price}}</h1>
         <button class="btn btn-outline-success my-2 my-sm-0" href="market">Back</button>
-            <div class="form-group mx-auto">
+            <div class="form-group center">
                 <h2>You Won!</h2>
                 <form action="{{url_for('login')}}" class="form-inline my-2 my-lg-0">
             <input name="bidprice" class="form-control mr-sm-2" type="text" placeholder="place a price" aria-label="Search" autofocus>
