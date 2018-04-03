@@ -158,7 +158,8 @@ def cat(cat_id):
         return render_template('404.html'), 404
 
     if request.method == 'POST':
-        new_bid = request.form['new_bid']
+        new_bid = request.form['bidprice']
+        print new_bid
         # new_owner = request.form['new_owner']
         new_owner = g.user
         cat.changeOwner(new_owner, new_bid)
