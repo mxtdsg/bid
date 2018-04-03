@@ -68,6 +68,13 @@ class Cat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(10))
     price = db.Column(db.Float, default=0)
+    owner = db.Column(db.Integer)
+
+    # New bid: change owner, change price
+    def changeOwner(self, new_owner, new_price):
+        self.price = new_price
+        self.owner = new_owner
+        db.session.commit()
 
 
 
@@ -142,16 +149,26 @@ def market():
     cats = Cat.query.all()
     return render_template('market.html', cats=cats)
 
-@app.route('/cat/<cat_id>')
+@app.route('/cat/<cat_id>', methods=['GET', 'POST'])
 def cat(cat_id):
-    # TODO: handel direct access from url / and doesnt exist
+    # get cat from db
     cat = Cat.query.get(cat_id)
+    # throw 404 if not found
+    if cat == None:
+        return render_template('404.html'), 404
 
     if request.method == 'POST':
-        letter = request.form['letter'].upper()
-        user.try_letter(letter)
+        new_bid = request.form['new_bid']
+        # new_owner = request.form['new_owner']
+        new_owner = g.user
+        cat.changeOwner(new_owner, new_bid)
+
     return render_template('cat.html', cat=cat)
 
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 app.debug = True
 if __name__ == '__main__':
