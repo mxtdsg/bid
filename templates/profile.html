@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <!-- Modal -->
+    {% include 'includes/_modal.html' %}
+
+    <div class="container text-center">
+        <h1>Hello {{user.username}}</h1>
+        <h1>Wallet balance: <h1 style="color:green">${{user.balance}}</h1></style></h1>
+        <h1>Cats:</h1>
+     </div>
+
+
+
+{% endblock %}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, g, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, flash, g, jsonify, flash
 from flask_sqlalchemy import SQLAlchemy
 import random
 
@@ -16,52 +16,11 @@ class User(db.Model):
     # user info
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(10))
-    # most recent game info
-    cur_word = db.Column(db.String(50), default='')
-    finished = db.Column(db.Boolean, default=False)
-    win = db.Column(db.Boolean, default=False)
+    balance = db.Column(db.Float, default=0)
 
     def __init__(self, username):
         self.username = username
 
-    def new_game(self):
-        self.finished = False
-        self.cur_word = self.random_word()
-        self.win = False
-
-    def try_letter(self, letter):
-        if len(letter) != 1 or not letter.isalpha():
-            return
-        elif letter in self.cur_guesses:
-            return
-        self.cur_guesses += letter
-        if letter not in self.cur_word:
-            self.times_left -= 1
-        if self.times_left <= 0:
-            self.finished = True
-            self.loses += 1
-        db.session.commit()
-
-    @property
-    def render(self):
-        # print self.cur_word
-        rendered = ''.join([char if char in self.cur_guesses else '_' for char in self.cur_word])
-        if rendered == self.cur_word:
-            self.win = True
-            self.finished = True
-            self.wins+=1
-            db.session.commit()
-        return rendered
-
-    def random_word(self):
-        users = User.query.all()
-        print len(users)
-        re = random.choice(users).id
-        while re == self.id:
-            re = random.choice(users).id
-        self.cur_word = re
-        db.session.commit()
-        return re
 
 
 class Cat(db.Model):
@@ -72,6 +31,23 @@ class Cat(db.Model):
 
     # New bid: change owner, change price
     def changeOwner(self, new_owner, new_price):
+        new_price = float(new_price)
+        # cant bid on your own cat
+        if g.user == self.owner:
+            flash('You own the cat!')
+            return
+        # price restriction: have to bid higher
+        if self.price >= float(new_price):
+            flash('You have to bid higher!')
+            return
+        # have to have enough money
+        new = User.query.get(new_owner)
+        if float(new_price) > new.balance:
+            flash("You don't have enough money!")
+            return
+        old = User.query.get(self.owner)
+        new.balance -= new_price
+        old.balance += new_price
         self.price = new_price
         self.owner = new_owner
         db.session.commit()
@@ -144,6 +120,12 @@ def play(user_id):
     return render_template('play.html', user=user)
 
 
+@app.route('/profile')
+def profile():
+    user = User.query.get(g.user)
+    return render_template('profile.html', user=user)
+
+
 @app.route('/market')
 def market():
     cats = Cat.query.all()
@@ -159,7 +141,6 @@ def cat(cat_id):
 
     if request.method == 'POST':
         new_bid = request.form['bidprice']
-        print new_bid
         # new_owner = request.form['new_owner']
         new_owner = g.user
         cat.changeOwner(new_owner, new_bid)
