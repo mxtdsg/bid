@@ -22,7 +22,7 @@
         </section>
         
 
-        
+
 
         <!-- <div align="left"> -->
 
@@ -39,11 +39,12 @@
 
 
             <h1 style='color:red'><font size = "6">Current Bid: {{cat.price}}</h1>
-             <h1><font size = "6">Owner: {{cat.owner}}</h1>
-             <button class="btn btn-outline-success my-2 my-sm-0" href="market">Back</button>
-
-            <button href="#" class="btn">Like<span class="badge badge-pill bg-light align-text-bottom">27</span></button>
-            <button href="#" class="btn">Comment</button>
+            <h1><font size = "6">Owner: {{cat.owner}}</h1>
+            <button class="btn btn-outline-success my-2 my-sm-0" href="market">Back</button>
+            <div class="btn-group">
+                <button href="#" class="btn btn-outline-primary">Like<span class="badge badge-pill bg-light align-text-bottom">27</span></button>
+                <button href="#" class="btn btn-outline-primary">Comment</button>
+            </div>
 
 
             {% if g.user == cat.owner %}
