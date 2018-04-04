@@ -12,14 +12,12 @@
 
     <div class="container text-center">
         <h1>Cat {{cat.id}}</h1>
-        <h1 style='color:grey'>{{cat.name}}</h1>
-        <h1>{{cat.name}}</h1>
-        <h1>{{cat.owner}}</h1>
-        <div>
-            <img src="/static/images/{{cat.name}}.jpg" width="250">
-        </div>
-        <h1 style='color:red'>Price: {{cat.price}}</h1>
-        <button class="btn btn-outline-success my-2 my-sm-0" href="market">Back</button>
+        <h1 style='color:grey'><font size = "6">{{cat.name}}</h1>
+        <img src="/static/images/{{cat.name}}.jpg" width="250">
+        <div align="left">
+             <h1 style='color:red'><font size = "6">Current Bid: {{cat.price}}</h1>
+             <h1><font size = "6">Owner: {{cat.owner}}</h1>
+             <button class="btn btn-outline-success my-2 my-sm-0" href="market">Back</button>
             <div class="form-group center">
                 <form class="form-inline my-2 my-lg-0" method="post">
                     <input name="bidprice" class="form-control mr-sm-2" type="text" placeholder="place a price" aria-label="Search" autofocus>
@@ -27,7 +25,8 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">History bid</button>
                 </form>
             </div>
+     </div>
 
-    </div>
+   
 
 {% endblock %}
