@@ -14,7 +14,17 @@
         <h1>Cat {{cat.id}}</h1>
         <h1 style='color:grey'><font size = "6">{{cat.name}}</h1>
         <img src="/static/images/{{cat.name}}.jpg" width="250">
-        <div align="left">
+        
+
+        <section class="jumbotron text-center">
+            <h1 class="jumbotron-heading">Description</h1>
+            <p class="lead text-muted">This is a cat</p>
+        </section>
+        
+
+        
+
+        <!-- <div align="left"> -->
 
 
         {% with messages = get_flashed_messages() %}
@@ -28,9 +38,13 @@
         {% endwith %}
 
 
-             <h1 style='color:red'><font size = "6">Current Bid: {{cat.price}}</h1>
+            <h1 style='color:red'><font size = "6">Current Bid: {{cat.price}}</h1>
              <h1><font size = "6">Owner: {{cat.owner}}</h1>
              <button class="btn btn-outline-success my-2 my-sm-0" href="market">Back</button>
+
+            <button href="#" class="btn">Like<span class="badge badge-pill bg-light align-text-bottom">27</span></button>
+            <button href="#" class="btn">Comment</button>
+
 
             {% if g.user == cat.owner %}
             {% else %}
