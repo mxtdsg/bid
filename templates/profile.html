@@ -6,9 +6,29 @@
     <div class="container text-center">
         <h1>Hello {{user.username}}</h1>
         <h1>Wallet balance: <h1 style="color:green">${{user.balance}}</h1></style></h1>
-        <h1>Cats:</h1>
-     </div>
+        <h1>Owned assets:</h1>
+    </div>
 
+    <div class="album py-5 bg-white">
+        <div class="container">
+        <div class="row">
+            {% for cat in assets %}
+                <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                <a href="/cat/{{cat.id}}">
+                    <img class="card-img-top" src="/static/images/{{cat.name}}.jpg" style="height:225px;width:100%; display:block;" alt="Cat">
+                    <div class="card-body">
+                        <p class="card-text" style="color:grey">Cat Description Placeholder</p>
+                        <p class="card-text" style="color:red">Owner: user #{{cat.owner}}</p>
+                        <p class="card-text" style="color:green">Price: $ {{cat.price}}</p>
+                    </div>
+                </a>
+                </div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
 
 
 {% endblock %}

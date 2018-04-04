@@ -123,7 +123,8 @@ def play(user_id):
 @app.route('/profile')
 def profile():
     user = User.query.get(g.user)
-    return render_template('profile.html', user=user)
+    assets = Cat.query.filter_by(owner=g.user).all()
+    return render_template('profile.html', user=user, assets=assets)
 
 
 @app.route('/market')
