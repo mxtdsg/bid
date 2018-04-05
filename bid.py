@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g, jsonify, flash
 from flask_sqlalchemy import SQLAlchemy
 import random
+import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bid.db'
@@ -10,6 +12,10 @@ db = SQLAlchemy(app)
 
 app.secret_key = 'bluhbluh'
 
+# upload file
+UPLOAD_FOLDER = 'path/to/the/uploads'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 class User(db.Model):
@@ -51,6 +57,16 @@ class Cat(db.Model):
         self.price = new_price
         self.owner = new_owner
         db.session.commit()
+
+class Action(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer)
+    id_asset = db.Column(db.Integer)
+    typeAction = db.Column(db.String(10))
+    content = db.Column(db.String(255))
+    # when someone likes it, cant like agian
+    # too many likes?? for db
+    # def like(self):
 
 
 
@@ -147,6 +163,35 @@ def cat(cat_id):
         cat.changeOwner(new_owner, new_bid)
 
     return render_template('cat.html', cat=cat)
+
+@app.route('/createasset', methods=['GET', 'POST'])
+def createAsset():
+    
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        # if file:
+        filename = secure_filename(file.filename)
+        # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        file.save("static/test.jpg")
+        return redirect(url_for('profile'))
+    
+    cats = Cat.query.all()
+    return render_template('createAsset.html', cats=cats)
+
+
+
+# def allowed_file(filename):
+#     return '.' in filename and \
+#            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.errorhandler(404)

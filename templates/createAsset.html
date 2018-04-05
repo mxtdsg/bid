@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <!-- Modal -->
+    {% include 'includes/_modal.html' %}
+    <script type="text/javascript">
+        function switchModalColor() {
+            $('#modal-header-tbc').toggleClass('myRedModal');
+            $('#modal-footer-tbc').toggleClass('myRedModal');
+            $('#modal-text-tbc').text('You Lost!')
+        }
+    </script>
+
+    <div class="container text-center">
+        <form class="needs-validation" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="username">Name</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">@</span>
+                </div>
+                <input type="text" class="form-control" id="username" placeholder="Name" required>
+                <div class="invalid-feedback" style="width: 100%;">
+                  Your username is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address">Price</label>
+              <input type="text" class="form-control" id="address" placeholder="$ 1234" required>
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address">Description</label>
+              <input type="text" class="form-control" id="address" placeholder="Description" style="height:200px">
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+
+            <hr class="mb-4">
+            <div class="custom-control custom-checkbox">
+                <!-- <form method="post"> -->
+                <input type="file" name="file" id="file">
+                <!-- <input type="submit"> -->
+                <!-- </form> -->
+            </div>
+
+            <hr class="mb-4">
+
+            <!-- <h4 class="mb-3">Payment</h4> -->
+
+            <!-- <hr class="mb-4"> -->
+            <button class="btn btn-primary btn-lg btn-block" type="submit" value="upload">Continue to checkout</button>
+          </form>
+
+    </div>
+
+   
+
+{% endblock %}
