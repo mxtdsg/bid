@@ -18,7 +18,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">@</span>
                 </div>
-                <input type="text" class="form-control" id="username" placeholder="Name" required>
+                <input type="text" class="form-control" id="assetname" name="assetname" placeholder="Name" required>
                 <div class="invalid-feedback" style="width: 100%;">
                   Your username is required.
                 </div>
@@ -26,18 +26,18 @@
             </div>
 
             <div class="mb-3">
-              <label for="address">Price</label>
-              <input type="text" class="form-control" id="address" placeholder="$ 1234" required>
+              <label for="assetprice">Price</label>
+              <input type="number" class="form-control" id="assetprice" name="assetprice" placeholder="$ 1234" required>
               <div class="invalid-feedback">
-                Please enter your shipping address.
+                Please enter the price.
               </div>
             </div>
 
             <div class="mb-3">
               <label for="address">Description</label>
-              <input type="text" class="form-control" id="address" placeholder="Description" style="height:200px">
+              <input type="text" class="form-control" id="address" placeholder="Description (not working rn)" style="height:200px">
               <div class="invalid-feedback">
-                Please enter your shipping address.
+                Please enter a description.
               </div>
             </div>
 

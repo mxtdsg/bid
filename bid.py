@@ -28,12 +28,15 @@ class User(db.Model):
         self.username = username
 
 
-
 class Cat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(10))
     price = db.Column(db.Float, default=0)
     owner = db.Column(db.Integer)
+    def __init__(self, name, price, owner):
+        self.name = name
+        self.price = price
+        self.owner = owner
 
     # New bid: change owner, change price
     def changeOwner(self, new_owner, new_price):
@@ -180,8 +183,16 @@ def createAsset():
             return redirect(request.url)
         # if file:
         filename = secure_filename(file.filename)
+        assetname = request.form['assetname']
+        assetprice = request.form['assetprice']
         # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        file.save("static/test.jpg")
+
+        # save file & create asset
+        file.save("static/images/"+assetname+".jpg")
+        cat = Cat(assetname, assetprice, g.user)
+        db.session.add(cat)
+        db.session.commit()
+
         return redirect(url_for('profile'))
     
     cats = Cat.query.all()
