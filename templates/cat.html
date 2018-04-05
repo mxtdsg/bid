@@ -2,13 +2,6 @@
 {% block body %}
     <!-- Modal -->
     {% include 'includes/_modal.html' %}
-    <script type="text/javascript">
-        function switchModalColor() {
-            $('#modal-header-tbc').toggleClass('myRedModal');
-            $('#modal-footer-tbc').toggleClass('myRedModal');
-            $('#modal-text-tbc').text('You Lost!')
-        }
-    </script>
 
     <div class="container text-center">
         <h1>Cat {{cat.id}}</h1>
@@ -40,7 +33,7 @@
 
             <h1 style='color:red'><font size = "6">Current Bid: {{cat.price}}</h1>
             <h1><font size = "6">Owner: {{cat.owner}}</h1>
-            <button class="btn btn-outline-success my-2 my-sm-0" href="market">Back</button>
+<!--             <button class="btn btn-outline-success my-2 my-sm-0" href="market">Back</button> -->
             <div class="btn-group">
                 <button href="#" class="btn btn-outline-primary">Like<span class="badge badge-pill bg-light align-text-bottom">27</span></button>
                 <button href="#" class="btn btn-outline-primary">Comment</button>
@@ -59,7 +52,42 @@
             {% endif %}
 
 
-     </div>
+    </div>
+    <br>
+    <div class="container jumbotron">
+    <section>
+        <div class="comment_block">
+         <div class="create_new_comment">
+            <div class="user_avatar">
+                <img src="https://s3.amazonaws.com/uifaces/faces/twitter/BillSKenney/73.jpg">
+            </div>
+            <div class="input_comment">
+                <input type="text" placeholder="Join the conversation..">
+            </div>
+         </div>
+         <div class="new_comment">
+            <ul class="user_comment">
+            <li>
+                <div class="user_avatar">
+                    <img src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/73.jpg">
+                </div>
+                <div class="comment_body">
+                    <p>Gastropub cardigan jean shorts, kogi Godard PBR&B lo-fi locavore. Organic chillwave vinyl Neutra. Bushwick Helvetica cred freegan, crucifix Godard craft beer deep v mixtape cornhole Truffaut master cleanse pour-over Odd Future beard. Portland polaroid iPhone.</p>
+                </div>
+            </li>
+            <li>
+                <div class="user_avatar">
+                    <img src="https://s3.amazonaws.com/uifaces/faces/twitter/ManikRathee/73.jpg">
+                </div>
+                <div class="comment_body">
+                    <p><div class="replied_to"><p><span class="user">John Smith:</span>Gastropub cardigan jean shorts, kogi Godard</p></div></p>
+                </div>
+            </li>
+            </ul>
+         </div>
+        </div>
+    </section>
+    </div>
 
    
 

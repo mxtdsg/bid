@@ -2,13 +2,17 @@
 {% block body %}
     <!-- Modal -->
     {% include 'includes/_modal.html' %}
-    <script type="text/javascript">
-        function switchModalColor() {
-            $('#modal-header-tbc').toggleClass('myRedModal');
-            $('#modal-footer-tbc').toggleClass('myRedModal');
-            $('#modal-text-tbc').text('You Lost!')
-        }
-    </script>
+
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+            <li style="color:red">{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
 
     <div class="container text-center">
         <form class="needs-validation" method="post" enctype="multipart/form-data">
