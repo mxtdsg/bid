@@ -110,37 +110,40 @@ def logout():
     session.pop('user', None)
     return redirect(url_for('index'))
 
-## game
 
-@app.route('/play')
-def new_game():
-    if g.user:
-        user = User.query.get(g.user)
-        user.random_word()
-        db.session.commit()
-        return redirect(url_for('play', user_id=g.user))
-    return redirect(url_for('index'))
+# ## game
 
-@app.route('/play/<user_id>', methods=['GET', 'POST'])
-def play(user_id):
-    # go to /play when not logged in OR try to play other ppl's game
-    if not g.user or g.user != int(user_id):
-        return redirect(url_for('index'))
+# @app.route('/play')
+# def new_game():
+#     if g.user:
+#         user = User.query.get(g.user)
+#         user.random_word()
+#         db.session.commit()
+#         return redirect(url_for('play', user_id=g.user))
+#     return redirect(url_for('index'))
 
-    user = User.query.get(user_id)
-    user.random_word()
-    db.session.commit()
-    if user.finished:
-        user.new_game()
-        db.session.commit()
-    if request.method == 'POST':
-        letter = request.form['letter'].upper()
-        user.try_letter(letter)
-    return render_template('play.html', user=user)
+# @app.route('/play/<user_id>', methods=['GET', 'POST'])
+# def play(user_id):
+#     # go to /play when not logged in OR try to play other ppl's game
+#     if not g.user or g.user != int(user_id):
+#         return redirect(url_for('index'))
+
+#     user = User.query.get(user_id)
+#     user.random_word()
+#     db.session.commit()
+#     if user.finished:
+#         user.new_game()
+#         db.session.commit()
+#     if request.method == 'POST':
+#         letter = request.form['letter'].upper()
+#         user.try_letter(letter)
+#     return render_template('play.html', user=user)
 
 
 @app.route('/profile')
 def profile():
+    if not g.user:
+        return redirect(url_for('index'))
     user = User.query.get(g.user)
     assets = Cat.query.filter_by(owner=g.user).all()
     return render_template('profile.html', user=user, assets=assets)
@@ -148,11 +151,15 @@ def profile():
 
 @app.route('/market')
 def market():
+    if not g.user:
+        return redirect(url_for('index'))
     cats = Cat.query.all()
     return render_template('market.html', cats=cats)
 
 @app.route('/cat/<cat_id>', methods=['GET', 'POST'])
 def cat(cat_id):
+    if not g.user:
+        return redirect(url_for('index'))
     # get cat from db
     cat = Cat.query.get(cat_id)
     # throw 404 if not found
@@ -169,7 +176,8 @@ def cat(cat_id):
 
 @app.route('/createasset', methods=['GET', 'POST'])
 def createAsset():
-    
+    if not g.user:
+        return redirect(url_for('index'))
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:

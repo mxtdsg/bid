@@ -14,6 +14,7 @@
                 <a href="/cat/{{cat.id}}">
                     <img class="card-img-top" src="/static/images/{{cat.name}}.jpg" style="height:225px;width:100%; display:block;" alt="Cat">
                     <div class="card-body">
+                        <p class="card-text">{{cat.name}}</p>
                         <p class="card-text" style="color:grey">Cat Description Placeholder</p>
                         <p class="card-text" style="color:red">Owner: user #{{cat.owner}}</p>
                         <p class="card-text" style="color:green">Price: $ {{cat.price}}</p>
@@ -25,27 +26,29 @@
         </div>
         </div>
     </div>
-    <h2>Cats</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">cat name</th>
-                <th scope="col">price</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            {% for cat in cats %}
+<!--     <div>
+        <h2>Cats</h2>
+        <table class="table">
+            <thead>
                 <tr>
-                    <th scope="col"><a href='/cat/{{cat.id}}'>{{cat.id}}<a></th>
-                    <th scope="col"><a href='/cat/{{cat.id}}'>{{cat.name}}<a></th>
-                    <th scope="col"><a href='/cat/{{cat.id}}'>{{cat.price}}<a></th>
+                    <th scope="col">#</th>
+                    <th scope="col">cat name</th>
+                    <th scope="col">price</th>
 
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for cat in cats %}
+                    <tr>
+                        <th scope="col"><a href='/cat/{{cat.id}}'>{{cat.id}}<a></th>
+                        <th scope="col"><a href='/cat/{{cat.id}}'>{{cat.name}}<a></th>
+                        <th scope="col"><a href='/cat/{{cat.id}}'>{{cat.price}}<a></th>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <div> -->
     <br>
     {% if not g.user %}
     <h3 style="color:#990000;">Please sign in!</h3>
@@ -53,19 +56,7 @@
             <input name="username" class="form-control mr-sm-2" type="text" placeholder="Username" aria-label="Search" autofocus>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
         </form>
-    {% else %}
-<!--         <div class="inline-block text-center row" align="center">
-            <form action="{{url_for('play',user_id=g.user)}}" class="form-inline my-2 my-lg-0">
-                <div class="form-group mx-auto col-md-auto">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Play</button>
-                </div>
-            </form>
-            <form action="{{url_for('logout')}}" class="form-inline my-2 my-lg-0">
-                <div class="form-group mx-auto col-md-auto">
-                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
-                </div>
-            </form>
-        </div> -->
+
     {% endif %}
     <br>
 
