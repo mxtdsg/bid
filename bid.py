@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bid.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.static_url_path=app.config.get('STATIC_FOLDER')
 app.static_folder=app.root_path + app.static_url_path
 db = SQLAlchemy(app)
@@ -237,4 +238,4 @@ def page_not_found(e):
 
 app.debug = True
 if __name__ == '__main__':
-    app.run()
+    app.run(host = "192.168.1.76", port = 5000)
