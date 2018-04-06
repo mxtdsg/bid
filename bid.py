@@ -33,10 +33,13 @@ class Cat(db.Model):
     name = db.Column(db.String(10))
     price = db.Column(db.Float, default=0)
     owner = db.Column(db.Integer)
-    def __init__(self, name, price, owner):
+    description = db.Column(db.String(255))
+    def __init__(self, name, price, owner, description):
         self.name = name
         self.price = price
         self.owner = owner
+        self.description = description
+
 
     # New bid: change owner, change price
     def changeOwner(self, new_owner, new_price):
@@ -59,6 +62,13 @@ class Cat(db.Model):
         old.balance += new_price
         self.price = new_price
         self.owner = new_owner
+        db.session.commit()
+
+    def changeDescription(self, new_description):
+        print type(new_description)
+        # new_description = new_description.encode('utf-8')
+        print type(new_description)
+        self.description = new_description
         db.session.commit()
 
 class Action(db.Model):
@@ -166,11 +176,18 @@ def cat(cat_id):
     if cat == None:
         return render_template('404.html'), 404
 
+
+
     if request.method == 'POST':
         new_bid = request.form['bidprice']
-        # new_owner = request.form['new_owner']
-        new_owner = g.user
-        cat.changeOwner(new_owner, new_bid)
+        if new_bid != None:
+            # new_owner = request.form['new_owner']
+            new_owner = g.user
+            cat.changeOwner(new_owner, new_bid)
+        # new_description = request.form['newdescription']
+        # print(new_description)
+        # if new_description != None:
+        #     cat.changeDescription(new_description)
 
     return render_template('cat.html', cat=cat)
 
@@ -193,11 +210,12 @@ def createAsset():
         filename = secure_filename(file.filename)
         assetname = request.form['assetname']
         assetprice = request.form['assetprice']
+        assetdescription = request.form['assetdescription']
         # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         # save file & create asset
         file.save("static/images/"+assetname+".jpg")
-        cat = Cat(assetname, assetprice, g.user)
+        cat = Cat(assetname, assetprice, g.user, assetdescription)
         db.session.add(cat)
         db.session.commit()
 
