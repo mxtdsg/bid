@@ -166,6 +166,15 @@ def market():
     cats = Cat.query.all()
     return render_template('market.html', cats=cats)
 
+@app.route('/leaderboard')
+def leaderboard():
+    if not g.user:
+        return redirect(url_for('index'))
+    cats = Cat.query.order_by("price desc")
+    users = User.query.all()
+    return render_template('leaderboard.html', cats=cats, users= users)
+    
+
 @app.route('/cat/<cat_id>', methods=['GET', 'POST'])
 def cat(cat_id):
     if not g.user:

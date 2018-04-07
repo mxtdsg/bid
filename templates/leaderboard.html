@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <div class="jumbotron text-center">
+        <h1>Leaderboard</h1>
+        <!-- <h2>{{g.user}}</h2> -->
+        <!-- <p class="lead">Market</p> -->
+    </div>
+   <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Game</th>
+                 <th scope="col">Price</th>
+                <th scope="col">Owner</th>
+                <th scope="col">Bio</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    {% for cat in cats %}
+                <a href="/cat/{{cat.id}}">
+                     <td> <img src="/static/images/{{cat.name}}.jpg" style="height:120px;width:120px; display:block;" alt="Cat"></td>
+                       <th scope="col">{{cat.name}}</th>
+                         <th scope="col" style="color:green">$ {{cat.price}}</th>
+                         <th scope="col" style="color:red"> {{cat.owner}}</th>
+                         <th scope="col" style="color:grey">{{cat.description}}</th></a>
+                          </tr>
+            {% endfor %}
+               
+        </tbody>
+    </table>
+  <br>
+
+
+{% endblock %}
