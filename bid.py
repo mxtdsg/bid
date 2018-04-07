@@ -24,9 +24,11 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(10))
     balance = db.Column(db.Float, default=0)
-
-    def __init__(self, username):
+    password = db.Column(db.String(24))
+    def __init__(self, username, password):
         self.username = username
+        self.password = password
+        self.balance = 0
 
 
 class Cat(db.Model):
@@ -104,16 +106,24 @@ def index():
 def login():
     # check if user exist
     username = request.args.get('username')
+    password = request.args.get('password')
     user = User.query.filter_by(username=username).first()
-    if user is not None:
-        session['user'] = user.id
-        return redirect(url_for('index'))
+    ps = user.password
+    ps = str(ps)
+    print(ps == password)
+    if ps == password:    	
+        if user is not None:
+            session['user'] = user.id
+            return redirect(url_for('index'))
+    return redirect(url_for('index')) 
     # if not create new user
-    user = User(username)
-    db.session.add(user)
-    db.session.commit()
-    session['user'] = user.id
-    return redirect(url_for('index'))
+	
+#    user = User(username)
+#    db.session.add(user)
+#    db.session.commit()
+#    session['user'] = user.id
+#    return redirect(url_for('index'))
+
 
 
 @app.route('/logout')
@@ -149,6 +159,18 @@ def logout():
 #         letter = request.form['letter'].upper()
 #         user.try_letter(letter)
 #     return render_template('play.html', user=user)
+
+@app.route('/register',methods=['GET', 'POST']) 
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User(username, password)
+        db.session.add(user)
+        db.session.commit()
+#    session['user'] = user.id
+        return redirect(url_for('index'))
+    return render_template('register.html')
 
 
 @app.route('/profile')
