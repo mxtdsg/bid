@@ -40,7 +40,20 @@
             <h1><font size = "6">Owner: {{cat.owner}}</h1>
 <!--             <button class="btn btn-outline-success my-2 my-sm-0" href="market">Back</button> -->
             <div class="btn-group">
-                <button href="#" class="btn btn-outline-primary">Like<span class="badge badge-pill bg-light align-text-bottom">27</span></button>
+                <button class=
+                {% if vote.like <= 0%} 
+                "btn btn-outline-primary"
+                {% else %}
+                "btn btn-primary"
+                {% endif %}
+                name="like" type="submit" href="#"><span class="oi oi-thumb-up"></span> <span class="badge badge-pill align-text-bottom">{{vote.count_like}}</span></button>
+                <button class=
+                {% if vote.want_to_play <= 0%} 
+                "btn btn-outline-primary"
+                {% else %}
+                "btn btn-primary"
+                {% endif %}
+                name="want_to_play" href="#"><span class="oi oi-caret-right"></span> <span class="badge badge-pill align-text-bottom">{{vote.count_want_to_play}}</span></button>
                 <button href="#" class="btn btn-outline-primary">Comment</button>
             </div>
 
@@ -50,8 +63,8 @@
             <div class="form-group center">
                 <form class="form-inline my-2 my-lg-0" method="post">
                     <input name="bidprice" class="form-control mr-sm-2" type="text" placeholder="place a price" aria-label="Search" autofocus>
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Place bid</button>
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">History bid</button>
+                    <button class="btn btn-outline-success my-2 my-sm-0" name="bid" type="submit">Place bid</button>
+                    <button class="btn btn-outline-success my-2 my-sm-0" name="bidhistory" type="submit">History bid</button>
                 </form>
             </div>
             {% endif %}

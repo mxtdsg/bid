@@ -81,7 +81,29 @@ class Action(db.Model):
     # too many likes?? for db
     # def like(self):
 
+class Vote(db.Model):
+    id_user = db.Column(db.Integer, primary_key=True)
+    id_asset = db.Column(db.Integer, primary_key=True)
+    like = db.Column(db.Integer, default=-1)
+    want_to_play = db.Column(db.Integer, default=-1)
+    count_like = 0
+    count_want_to_play = 0    
 
+    def __init__(self, id_user, id_asset):
+        self.id_user = id_user
+        self.id_asset = id_asset
+
+    def changeLike(self, new_like):
+        self.like = new_like
+        db.session.commit()
+
+    def changeWantToPlay(self, new_want_to_play):
+        self.want_to_play = new_want_to_play
+        db.session.commit()
+
+    def countVotes(self, id_asset):
+        self.count_like = self.query.filter_by(like=1,id_asset=id_asset).count()
+        self.count_want_to_play = self.query.filter_by(want_to_play=1,id_asset=id_asset).count()
 
 ## before request
 
@@ -179,26 +201,47 @@ def leaderboard():
 def cat(cat_id):
     if not g.user:
         return redirect(url_for('index'))
+
     # get cat from db
     cat = Cat.query.get(cat_id)
     # throw 404 if not found
     if cat == None:
         return render_template('404.html'), 404
 
-
+	# get vote from db
+    vote = Vote.query.get((g.user, cat_id))
+	# create default entry if not found
+    if vote == None:
+        vote = Vote(g.user, cat_id)
+        db.session.add(vote)
+        db.session.commit()
 
     if request.method == 'POST':
-        new_bid = request.form['bidprice']
-        if new_bid != None:
-            # new_owner = request.form['new_owner']
-            new_owner = g.user
-            cat.changeOwner(new_owner, new_bid)
-        # new_description = request.form['newdescription']
-        # print(new_description)
-        # if new_description != None:
-        #     cat.changeDescription(new_description)
+        if 'bid' in request.form:
+            new_bid = request.form['bidprice']
+            if new_bid != None:
+                # new_owner = request.form['new_owner']
+                new_owner = g.user
+                cat.changeOwner(new_owner, new_bid)
+            # new_description = request.form['newdescription']
+            # print(new_description)
+            # if new_description != None:
+            #     cat.changeDescription(new_description)
+        elif 'bidhistory' in request.form:
+            print "submit - bidhistory"
+        elif 'like' in request.form:
+            if vote.like <= 0:
+                vote.changeLike(1)
+            else:
+                vote.changeLike(0)
+        elif 'want_to_play' in request.form:
+            if vote.want_to_play <= 0:
+                vote.changeWantToPlay(1)
+            else:
+                vote.changeWantToPlay(0)
 
-    return render_template('cat.html', cat=cat)
+    vote.countVotes(cat_id)
+    return render_template('cat.html', cat=cat, vote=vote)
 
 @app.route('/createasset', methods=['GET', 'POST'])
 def createAsset():
