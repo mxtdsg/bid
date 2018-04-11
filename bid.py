@@ -4,6 +4,8 @@ import random
 import os
 from werkzeug.utils import secure_filename
 
+# start the application if this is the main python module (which it is)
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bid.db'
 app.static_url_path=app.config.get('STATIC_FOLDER')
@@ -27,6 +29,17 @@ class User(db.Model):
     def __init__(self, username):
         self.username = username
 
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer)
+    id_asset = db.Column(db.Integer)
+    message = db.Column(db.Text)
+    def __init__(self, id_user, id_asset, message):
+        self.id_user = id_user
+        self.id_asset = id_asset
+        self.message = message
+        
+        
 
 class Cat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -86,6 +99,7 @@ class Vote(db.Model):
     id_asset = db.Column(db.Integer, primary_key=True)
     like = db.Column(db.Integer, default=-1)
     want_to_play = db.Column(db.Integer, default=-1)
+
     count_like = 0
     count_want_to_play = 0    
 
@@ -143,35 +157,6 @@ def logout():
     return redirect(url_for('index'))
 
 
-# ## game
-
-# @app.route('/play')
-# def new_game():
-#     if g.user:
-#         user = User.query.get(g.user)
-#         user.random_word()
-#         db.session.commit()
-#         return redirect(url_for('play', user_id=g.user))
-#     return redirect(url_for('index'))
-
-# @app.route('/play/<user_id>', methods=['GET', 'POST'])
-# def play(user_id):
-#     # go to /play when not logged in OR try to play other ppl's game
-#     if not g.user or g.user != int(user_id):
-#         return redirect(url_for('index'))
-
-#     user = User.query.get(user_id)
-#     user.random_word()
-#     db.session.commit()
-#     if user.finished:
-#         user.new_game()
-#         db.session.commit()
-#     if request.method == 'POST':
-#         letter = request.form['letter'].upper()
-#         user.try_letter(letter)
-#     return render_template('play.html', user=user)
-
-
 @app.route('/profile')
 def profile():
     if not g.user:
@@ -201,13 +186,13 @@ def leaderboard():
 def cat(cat_id):
     if not g.user:
         return redirect(url_for('index'))
-
     # get cat from db
     cat = Cat.query.get(cat_id)
     # throw 404 if not found
+
     if cat == None:
         return render_template('404.html'), 404
-
+    message = Comment.query.filter_by(id_asset=cat_id)
 	# get vote from db
     vote = Vote.query.get((g.user, cat_id))
 	# create default entry if not found
@@ -215,7 +200,7 @@ def cat(cat_id):
         vote = Vote(g.user, cat_id)
         db.session.add(vote)
         db.session.commit()
-
+    
     if request.method == 'POST':
         if 'bid' in request.form:
             new_bid = request.form['bidprice']
@@ -227,6 +212,13 @@ def cat(cat_id):
             # print(new_description)
             # if new_description != None:
             #     cat.changeDescription(new_description)
+        elif 'submit_message' in request.form:
+            id_user = g.user
+            id_asset = cat_id
+            message = request.form['message']
+            comment = Comment(id_user, id_asset, message)
+            db.session.add(comment)
+            db.session.commit()
         elif 'bidhistory' in request.form:
             print "submit - bidhistory"
         elif 'like' in request.form:
@@ -241,8 +233,9 @@ def cat(cat_id):
                 vote.changeWantToPlay(0)
 
     vote.countVotes(cat_id)
-    return render_template('cat.html', cat=cat, vote=vote)
+    return render_template('cat.html', cat=cat, vote=vote, message=message)
 
+ 
 @app.route('/createasset', methods=['GET', 'POST'])
 def createAsset():
     if not g.user:
@@ -290,3 +283,30 @@ def page_not_found(e):
 app.debug = True
 if __name__ == '__main__':
     app.run()
+# ## game
+
+# @app.route('/play')
+# def new_game():
+#     if g.user:
+#         user = User.query.get(g.user)
+#         user.random_word()
+#         db.session.commit()
+#         return redirect(url_for('play', user_id=g.user))
+#     return redirect(url_for('index'))
+
+# @app.route('/play/<user_id>', methods=['GET', 'POST'])
+# def play(user_id):
+#     # go to /play when not logged in OR try to play other ppl's game
+#     if not g.user or g.user != int(user_id):
+#         return redirect(url_for('index'))
+
+#     user = User.query.get(user_id)
+#     user.random_word()
+#     db.session.commit()
+#     if user.finished:
+#         user.new_game()
+#         db.session.commit()
+#     if request.method == 'POST':
+#         letter = request.form['letter'].upper()
+#         user.try_letter(letter)
+#     return render_template('play.html', user=user)
