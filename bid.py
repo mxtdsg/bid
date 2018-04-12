@@ -192,7 +192,7 @@ def cat(cat_id):
 
     if cat == None:
         return render_template('404.html'), 404
-    message = Comment.query.filter_by(id_asset=cat_id)
+    messages = Comment.query.filter_by(id_asset=cat_id)
 	# get vote from db
     vote = Vote.query.get((g.user, cat_id))
 	# create default entry if not found
@@ -233,7 +233,7 @@ def cat(cat_id):
                 vote.changeWantToPlay(0)
 
     vote.countVotes(cat_id)
-    return render_template('cat.html', cat=cat, vote=vote, message=message)
+    return render_template('cat.html', cat=cat, vote=vote, message=messages)
 
  
 @app.route('/createasset', methods=['GET', 'POST'])

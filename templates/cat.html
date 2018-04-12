@@ -67,13 +67,14 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" name="bidhistory" type="submit">History bid</button>
                 </form>
             </div>
+            {% for m in message %}
              <div class="album py-5 bg-white">
         <div class="container">
         <div class="row">
                 <div class="col-md-4">
                 <div class="card mb-4 box-shadow">  
                    <div class="card-body">
-                       <h1 style='color:grey'><font size = "6">User {{g.user}}.  Posted:   "{{message}}"</h1>
+                       <h1 style='color:grey'><font size = "6">User {{g.user}}.  Posted:   "{{m.message}}"</h1>
                     </div>
                 </a>
                 </div>
@@ -81,7 +82,7 @@
         </div>
         </div>
     </div>
-            
+             {% endfor %}
             <form action ="" method = "post">
             <label> Comment:<br><textarea cols="35" rows="5" name="message"></textarea></label><br>
             <input type="submit" name="submit_message" value="Submit">
@@ -89,6 +90,7 @@
             
             {% endif %}
             </div>
+               </div>
    
 {% endblock %}
     <!--</div>
