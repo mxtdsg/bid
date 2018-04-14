@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_sqlalchemy import SQLAlchemy
 import random
 import os
+from collections import defaultdict 
 from werkzeug.utils import secure_filename
 
 # start the application if this is the main python module (which it is)
@@ -179,7 +180,21 @@ def leaderboard():
         return redirect(url_for('index'))
     cats = Cat.query.order_by("price desc")
     users = User.query.all()
-    return render_template('leaderboard.html', cats=cats, users= users)
+    user = User.query.get(g.user)
+    return render_template('leaderboard.html', cats=cats, users=users, user=user)
+
+@app.route('/gamerboard')
+def gamerboard():
+    if not g.user:
+        return redirect(url_for('index'))
+    users = User.query.order_by("balance desc")
+    user = User.query.get(g.user)
+    assets = defaultdict (list)
+    for u in users: 
+        print u.username
+        assets[u.username] = Cat.query.join(User, Cat.owner == User.id).filter_by(id=u.id).all()
+        print len(assets[u.username])
+    return render_template('gamerboard.html', users= users, user=user, assets=assets)
     
 
 @app.route('/cat/<cat_id>', methods=['GET', 'POST'])

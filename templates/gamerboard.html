@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <div class="jumbotron text-center">
+        <h1>Gamerboard</h1>
+        <!-- <h2>{{g.user}}</h2> -->
+        <!-- <p class="lead">Market</p> -->
+    </div>
+   <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Wallet Balance</th>
+                 <th scope="col">Owned assets</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    {% for user in users %}
+                         <th scope="col" style="color:black"> {{user.username}}</th>
+                         <th scope="col" style="color:green">$ {{user.balance}}</th>
+                         {% for cat in assets[user.username] %}
+                         <td> <img src="/static/images/{{cat.name}}.jpg" style="height:120px;width:120px; display:block;" alt="Cat">{{cat.name}}</td>
+                          {% endfor %}
+                          </tr>
+            {% endfor %}
+               
+        </tbody>
+    </table>
+  <br>
+ 
+{% endblock %}
