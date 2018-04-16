@@ -1,31 +1,22 @@
 {% extends 'layout.html' %}
 {% block body %}
-    <div class="jumbotron text-center">
-        <h1>Market</h1>
-        <!-- <h2>{{g.user}}</h2> -->
-        <!-- <p class="lead">Market</p> -->
-    </div>
-    <div class="album py-5 bg-white">
+<body style="background-color:lightgrey;">
         <div class="container">
         <div class="row">
             {% for cat in cats %}
-                <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
+                <div class="col-md-3">
                 <a href="/cat/{{cat.id}}">
-                    <img class="card-img-top" src="/static/images/{{cat.name}}.jpg" style="height:225px;width:100%; display:block;" alt="Cat">
+                    <img class="card-img-top" src="/static/images/{{cat.name}}.jpg" style="height:250px;width:210px; display:block;" alt="Cat">
                     <div class="card-body">
                         <p class="card-text">{{cat.name}}</p>
-                        <p class="card-text" style="color:grey">bio: {{cat.description}}</p>
                         <p class="card-text" style="color:red">Owner: user #{{cat.owner}}</p>
                         <p class="card-text" style="color:green">Price: $ {{cat.price}}</p>
                     </div>
                 </a>
                 </div>
-                </div>
             {% endfor %}
         </div>
         </div>
-    </div>
 <!--     <div>
         <h2>Cats</h2>
         <table class="table">
