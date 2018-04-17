@@ -4,6 +4,8 @@ import random
 import os
 from werkzeug.utils import secure_filename
 
+# start the application if this is the main python module (which it is)
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bid.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -30,6 +32,17 @@ class User(db.Model):
         self.password = password
         self.balance = 0
 
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer)
+    id_asset = db.Column(db.Integer)
+    message = db.Column(db.Text)
+    def __init__(self, id_user, id_asset, message):
+        self.id_user = id_user
+        self.id_asset = id_asset
+        self.message = message
+        
+        
 
 class Cat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -84,7 +97,30 @@ class Action(db.Model):
     # too many likes?? for db
     # def like(self):
 
+class Vote(db.Model):
+    id_user = db.Column(db.Integer, primary_key=True)
+    id_asset = db.Column(db.Integer, primary_key=True)
+    like = db.Column(db.Integer, default=-1)
+    want_to_play = db.Column(db.Integer, default=-1)
 
+    count_like = 0
+    count_want_to_play = 0    
+
+    def __init__(self, id_user, id_asset):
+        self.id_user = id_user
+        self.id_asset = id_asset
+
+    def changeLike(self, new_like):
+        self.like = new_like
+        db.session.commit()
+
+    def changeWantToPlay(self, new_want_to_play):
+        self.want_to_play = new_want_to_play
+        db.session.commit()
+
+    def countVotes(self, id_asset):
+        self.count_like = self.query.filter_by(like=1,id_asset=id_asset).count()
+        self.count_want_to_play = self.query.filter_by(want_to_play=1,id_asset=id_asset).count()
 
 ## before request
 
@@ -132,6 +168,7 @@ def logout():
     return redirect(url_for('index'))
 
 
+<<<<<<< HEAD
 # ## game
 
 # @app.route('/play')
@@ -173,6 +210,8 @@ def register():
     return render_template('register.html')
 
 
+=======
+>>>>>>> 58fc81163bf7d9b8842313df1e84806020b35a62
 @app.route('/profile')
 def profile():
     if not g.user:
@@ -189,6 +228,15 @@ def market():
     cats = Cat.query.all()
     return render_template('market.html', cats=cats)
 
+@app.route('/leaderboard')
+def leaderboard():
+    if not g.user:
+        return redirect(url_for('index'))
+    cats = Cat.query.order_by("price desc")
+    users = User.query.all()
+    return render_template('leaderboard.html', cats=cats, users= users)
+    
+
 @app.route('/cat/<cat_id>', methods=['GET', 'POST'])
 def cat(cat_id):
     if not g.user:
@@ -196,24 +244,53 @@ def cat(cat_id):
     # get cat from db
     cat = Cat.query.get(cat_id)
     # throw 404 if not found
+
     if cat == None:
         return render_template('404.html'), 404
-
-
-
+    message = Comment.query.filter_by(id_asset=cat_id)
+	# get vote from db
+    vote = Vote.query.get((g.user, cat_id))
+	# create default entry if not found
+    if vote == None:
+        vote = Vote(g.user, cat_id)
+        db.session.add(vote)
+        db.session.commit()
+    
     if request.method == 'POST':
-        new_bid = request.form['bidprice']
-        if new_bid != None:
-            # new_owner = request.form['new_owner']
-            new_owner = g.user
-            cat.changeOwner(new_owner, new_bid)
-        # new_description = request.form['newdescription']
-        # print(new_description)
-        # if new_description != None:
-        #     cat.changeDescription(new_description)
+        if 'bid' in request.form:
+            new_bid = request.form['bidprice']
+            if new_bid != None:
+                # new_owner = request.form['new_owner']
+                new_owner = g.user
+                cat.changeOwner(new_owner, new_bid)
+            # new_description = request.form['newdescription']
+            # print(new_description)
+            # if new_description != None:
+            #     cat.changeDescription(new_description)
+        elif 'submit_message' in request.form:
+            id_user = g.user
+            id_asset = cat_id
+            message = request.form['message']
+            comment = Comment(id_user, id_asset, message)
+            db.session.add(comment)
+            db.session.commit()
+        elif 'bidhistory' in request.form:
+            print "submit - bidhistory"
+        elif 'like' in request.form:
+            if vote.like <= 0:
+                vote.changeLike(1)
+            else:
+                vote.changeLike(0)
+        elif 'want_to_play' in request.form:
+            if vote.want_to_play <= 0:
+                vote.changeWantToPlay(1)
+            else:
+                vote.changeWantToPlay(0)
 
-    return render_template('cat.html', cat=cat)
+    vote.countVotes(cat_id)
+    return render_template('cat.html', cat=cat, vote=vote, message=message)
 
+ 
 @app.route('/createasset', methods=['GET', 'POST'])
 def createAsset():
     if not g.user:
@@ -260,4 +337,35 @@ def page_not_found(e):
 
 app.debug = True
 if __name__ == '__main__':
+<<<<<<< HEAD
     app.run(host = "192.168.1.76", port = 5000)
+=======
+    app.run()
+# ## game
+
+# @app.route('/play')
+# def new_game():
+#     if g.user:
+#         user = User.query.get(g.user)
+#         user.random_word()
+#         db.session.commit()
+#         return redirect(url_for('play', user_id=g.user))
+#     return redirect(url_for('index'))
+
+# @app.route('/play/<user_id>', methods=['GET', 'POST'])
+# def play(user_id):
+#     # go to /play when not logged in OR try to play other ppl's game
+#     if not g.user or g.user != int(user_id):
+#         return redirect(url_for('index'))
+
+#     user = User.query.get(user_id)
+#     user.random_word()
+#     db.session.commit()
+#     if user.finished:
+#         user.new_game()
+#         db.session.commit()
+#     if request.method == 'POST':
+#         letter = request.form['letter'].upper()
+#         user.try_letter(letter)
+#     return render_template('play.html', user=user)
+>>>>>>> 58fc81163bf7d9b8842313df1e84806020b35a62
