@@ -2,30 +2,17 @@
 {% block body %}
     <!-- Modal -->
     {% include 'includes/_modal.html' %}
-
-    <div class="container text-center">
-        <h1>Cat {{cat.id}}</h1>
-        <h1 style='color:grey'><font size = "6">{{cat.name}}</h1>
-        <img src="/static/images/{{cat.name}}.jpg" width="210">
-        
-
-        <section class="jumbotron text-center">
-            <h1 class="jumbotron-heading">Description</h1>
-            <p class="lead text-muted">{{cat.description}}</p>
+<body style="background-color:#d9d9d9;">
+    <div class="container" style="background-color: white">
+        <img src="/static/images/{{cat.name}}.jpg" width="420" height="500" align="left">
+        <h1 style='color:grey' align="left"><font size = "6">{{cat.name}}</h1>
+            <h1 >Description</h1>
+            <p >{{cat.description}}</p>
             <form class="form-inline my-2 my-lg-0" method="post">
                 <input type="text" name="newdescription" placeholder="Change description(255 char limit)">
                 <button class="btn btn-primary my-2 my-sm-0" type="submit">submit</button>
             <form>
-
-        </section>
-        
-
-
-
-        <!-- <div align="left"> -->
-
-
-        {% with messages = get_flashed_messages() %}
+           {% with messages = get_flashed_messages() %}
             {% if messages %}
             <ul class=flashes>
             {% for message in messages %}
@@ -68,20 +55,10 @@
                 </form>
             </div>
             {% for m in message %}
-             <div class="album py-5 bg-white">
-        <div class="container">
-        <div class="row">
-                <div class="col-md-4">
-                <div class="card mb-4 box-shadow">  
                    <div class="card-body">
-                       <h1 style='color:grey'><font size = "6">User {{id_user}}.  Posted: "{{m.message}}"</h1>
+                       <h1 style='color:black'><font size = "3">: {{m.message}}</h1>
                     </div>
                 </a>
-                </div>
-                </div>
-        </div>
-        </div>
-    </div>
              {% endfor %}
             <form action ="" method = "post">
             <label> Comment:<br><textarea cols="35" rows="5" name="message"></textarea></label><br>
@@ -91,7 +68,7 @@
             {% endif %}
             </div>
                </div>
-   
+   </body>
 {% endblock %}
     <!--</div>
     <br>
