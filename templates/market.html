@@ -1,21 +1,43 @@
 {% extends 'layout.html' %}
 {% block body %}
-<body style="background-color:lightgrey;">
-        <div class="container">
-        <div class="row">
-            {% for cat in cats %}
-                <div class="col-md-3">
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div.gallery {
+    margin: 12.5px;
+    background-color: white;
+    float: left;
+    width: 210px;
+    height: 360px;
+}
+div.gallery img {
+    width: 100%;
+}
+
+div.desc {
+    padding: 0px;
+    text-align: left;
+}
+div.gallery:hover {
+    border: 1px solid #777;
+}
+<
+</style>
+</head>
+<body style="background-color:#d9d9d9;">
+     {% for cat in cats %}
+      <div class="gallery">
+                <div class="desc">
                 <a href="/cat/{{cat.id}}">
-                    <img class="card-img-top" src="/static/images/{{cat.name}}.jpg" style="height:250px;width:210px; display:block;" alt="Cat">
-                    <div class="card-body">
-                        <p class="card-text">{{cat.name}}</p>
-                        <p class="card-text" style="color:red">Owner: user #{{cat.owner}}</p>
-                        <p class="card-text" style="color:green">Price: $ {{cat.price}}</p>
+                    <img  src="/static/images/{{cat.name}}.jpg" style="height:250px;width:210px; display:block;" alt="Cat">
+                        <p style="color:black; font-size:20px" >{{cat.name}}</p>
+                        <p style="color:black;font-size:20px"><img src="/static/images/logo_sgc.png" style="height:20px;width:20px">  {{cat.price}}</p>
+                         <p style="color:black; font-size:15px">Owner: {{cat.owner}}</p>
                     </div>
                 </a>
                 </div>
             {% endfor %}
-        </div>
         </div>
   <br>
     {% if not g.user %}
@@ -27,7 +49,8 @@
 
     {% endif %}
     <br>
-
+    </body>
+</html>
 {% endblock %}
 <!--     <div>
         <h2>Cats</h2>

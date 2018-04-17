@@ -10,7 +10,9 @@
 }
 
 ul {
-	display: inline-block;
+	display: flex;
+	align-items: center;
+    justify-content: center;
     list-style-type: none;
     overflow: hidden;
     text-align: center;
@@ -30,10 +32,12 @@ li a {
     display:block;
     color:#828282;
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
     padding: 20px 10px;
     text-decoration: none;
+
 }
+
 
 li a:hover {
     background: #27334e;
@@ -71,13 +75,11 @@ li a:target {
 
 <body>
 	<div class="center">
-<nav>
-
-       <ul>
-       	 <a href="/">
+<nav role="main">
+       <ul>       	
          <li><img src="/static/images/logo_sgc.png"></li>
-         <li><b><p style="font-size:40px; color: white" >SGC</p></b></li>
-         <li>Gamebook</a></li>
+         <li><b><p style="font-size:30px; color: white;text-align:center" >SGC</p></b></li>
+          <a href="/"><li>Gamebook</a></li>
       {% if g.user %}
 <!--         <li class="nav-item active">
           <a class="nav-link" href="/play">Play <span class="sr-only">(current)</span></a>
@@ -99,7 +101,7 @@ li a:target {
   <div class="bar3"></div></a>
 </nav>
 
-<nav>
+<nav role="sub">
   
       {% if g.user %}
         <a  href="/market">Market</a>
