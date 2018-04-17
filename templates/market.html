@@ -17,6 +17,18 @@
             {% endfor %}
         </div>
         </div>
+  <br>
+    {% if not g.user %}
+    <h3 style="color:#990000;">Please sign in!</h3>
+        <form action="{{url_for('login')}}" class="form-inline my-2 my-lg-0">
+            <input name="username" class="form-control mr-sm-2" type="text" placeholder="Username" aria-label="Search" autofocus>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
+        </form>
+
+    {% endif %}
+    <br>
+
+{% endblock %}
 <!--     <div>
         <h2>Cats</h2>
         <table class="table">
@@ -40,15 +52,4 @@
             </tbody>
         </table>
     <div> -->
-    <br>
-    {% if not g.user %}
-    <h3 style="color:#990000;">Please sign in!</h3>
-        <form action="{{url_for('login')}}" class="form-inline my-2 my-lg-0">
-            <input name="username" class="form-control mr-sm-2" type="text" placeholder="Username" aria-label="Search" autofocus>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
-        </form>
-
-    {% endif %}
-    <br>
-
-{% endblock %}
+    

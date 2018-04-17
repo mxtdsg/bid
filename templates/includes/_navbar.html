@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>web</title>
-  <style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
     *{
   box-sizing: border-box;
 }
 body{
        margin:0;
-       background: gray;
+       background: d9d9d9;
 }
 nav{
   background: #27334e;
   width: 100%;
-  overflow: auto;
+  overflow: hidden;
 }
 ul{
   margin:0;
@@ -24,22 +24,86 @@ li{
   float: left;
 }
 nav a{
-  width: 120px;
+  width: 200px;
   display: block;
   text-decoration: none;
   text-align:center;
   background: #27334e;
-  font-size: 17px;
-  color:white;
+  font-size: 20px;
+  color:#828282;
   padding:20px 10px;
   font-family:Arial;
 }
-  </style>
+nav a:hover{
+  background: #27334e;
+  color:white;
+  }
+  a:active{
+  background: #27334e;
+  color:white;
+  }
+ .container {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+ </style>
+
 </head>
 <body>
 <nav>
         <ul>
-        <li><a href="/">Home</a></li>
+          <li><img src="/static/images/logo_sgc.png"></li>
+        <li><a href="/">Gamebook</a></li>
+      {% if g.user %}
+<!--         <li class="nav-item active">
+          <a class="nav-link" href="/play">Play <span class="sr-only">(current)</span></a>
+        </li> -->
+        <li><a href="/gamerboard">Gamerbook</a></li>
+        <li><a  href="/market">Influencerbook</a></li>
+        <li><a href="/leaderboard">Investorbook</a></li>
+        
+      {% endif %}
+    </ul>
+  
+  <!-- log in/out -->
+
+    <ul>
+      {% if not g.user %}
+      <li><a href="/">Sign in</a></li>
+      {% else %}
+      <li><a href="/profile"><img src="/static/images/logo_user.png" style="height:50px; width:50px"></a></li>
+      {% endif %}
+  <li> <a href="/logout">
+  <div class="container" onclick="myFunction(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div></a>
+  </li> 
+</ul>
+</nav>
+
+<nav>
+        <ul>
       {% if g.user %}
 <!--         <li class="nav-item active">
           <a class="nav-link" href="/play">Play <span class="sr-only">(current)</span></a>
@@ -47,22 +111,16 @@ nav a{
         <li><a  href="/market">Market</a></li>
         <li><a href="/leaderboard">Leaderboard</a></li>
         <li><a href="/gamerboard">Gamerboard</a></li>
+      </ul>
       {% endif %}
-    </ul>
-  </nav>
-  <!-- log in/out -->
-  <div>
-    <ul>
-      {% if not g.user %}
-      <li><a href="/">Sign in</a></li>
-      {% else %}
-      <li><a href="/profile" style="color:green">My Profile</a>
-          <a href="/logout">Log out</a>
-      </li>
-      {% endif %}
-    </ul>
-  </div>
 </nav>
+
+
+<script>
+function myFunction(x) {
+    x.classList.toggle("change");
+}
+</script>
 </body>
 </html>
 
