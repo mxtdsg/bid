@@ -5,9 +5,9 @@
 <head>
 <style>
     div.gallery {
-    margin: 12.5px;
-    background-color: white;
     float: left;
+    margin: 5px;
+    background-color: white;
     width: 210px;
     height: 360px;
 }
@@ -29,11 +29,11 @@ div.gallery:hover {
      {% for cat in cats %}
       <div class="gallery">
                 <div class="desc">
-                <a href="/cat/{{cat.id}}">
+                <a href="/cat/{{cat.id}}" style="text-decoration:none">
                     <img  src="/static/images/{{cat.name}}.jpg" style="height:250px;width:210px; display:block;" alt="Cat">
-                        <p style="color:black; font-size:20px" >{{cat.name}}</p>
-                        <p style="color:black;font-size:20px"><img src="/static/images/logo_sgc.png" style="height:20px;width:20px">  {{cat.price}}</p>
-                         <p style="color:black; font-size:15px">Owner: {{cat.owner}}</p>
+                        <p style="color:black; font-size:20px; margin: 5px; padding-left: 10px" >{{cat.name}}</p>
+                        <p style="color:black;font-size:20px; margin: 0px; padding-left: 14px"><img src="/static/images/logo_sgc.png" style="height:20px;width:20px">  {{cat.price}}</p>
+                         <p style="color:black; font-size:15px; margin: 5px; padding-left: 10px">Owner: {{cat.owner}}</p>
                     </div>
                 </a>
                 </div>
