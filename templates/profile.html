@@ -2,38 +2,58 @@
 {% block body %}
     <!-- Modal -->
     {% include 'includes/_modal.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div.gallery {
+    float: left;
+    margin: 5px;
+    background-color: white;
+    width: 210px;
+    height: 360px;
+}
+div.gallery img {
+    width: 100%;
+}
 
-    <div class="container text-center">
-        <h1>Hello {{user.username}}</h1>
-        <h1>Wallet balance: <h1 style="color:green">${{user.balance}}</h1></style></h1>
-        <h1>Owned assets:</h1>
-    </div>
+div.desc {
+    padding: 0px;
+    text-align: left;
+}
+div.gallery:hover {
+    border: 1px solid #777;
+}
 
-    <div class="album py-5 bg-white">
-        <div class="container">
-        <div class="row">
+</style>
+</head>
+<div class="container" style="background-color: white; height: 50px; width: 1200px; margin-top: -10px" >
+      {% if g.user %}
+        <a  href="/market" style="color:black; font-size: 18px">Total games:</a>
+        <a href="/leaderboard" style="color:black; font-size: 18px; padding-left: 20px" >Total Game Value:  {{user.balance}} <img src="/static/images/logo_sgc.png" style="height:20px;width:20px"></a> </a>
+        <a href="/gamerboard" style="color:black; font-size: 18px; padding-left: 20px">SGC Balance: {{user.balance}} <img src="/static/images/logo_sgc.png" style="height:20px;width:20px"></a>
+      {% endif %}
+  </div>
+<body style="background-color:#d9d9d9;">
             {% for cat in assets %}
-                <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
+                <div class="gallery">
+                <div class="desc">
                 <a href="/cat/{{cat.id}}">
-                    <img class="card-img-top" src="/static/images/{{cat.name}}.jpg" style="height:225px;width:100%; display:block;" alt="Cat">
-                    <div class="card-body">
-                        <p class="card-text">{{cat.name}}</p>
-                        <p class="card-text" style="color:grey">bio: {{cat.description}}</p>
-                        <!-- <p class="card-text" style="color:red">Owner: user #{{cat.owner}}</p> -->
-                        <p class="card-text" style="color:green">Price: $ {{cat.price}}</p>
-                    </div>
+                    <img src="/static/images/{{cat.name}}.jpg" style="height:225px;width:100%; display:block;" alt="Cat">
+  <p style="color:black; font-size:20px; margin: 5px; padding-left: 10px" >{{cat.name}}</p>
+                        <p style="color:black;font-size:20px; margin: 0px; padding-left: 14px"><img src="/static/images/logo_sgc.png" style="height:20px;width:20px">  {{cat.price}}</p>
+                        {% for user in users %}
+                         <p style="color:black; font-size:15px; margin: 5px; padding-left: 10px">{{user.username}}</p>
+                         {% endfor %}
                 </a>
                 </div>
                 </div>
             {% endfor %}
-        </div>
-        </div>
     </div>
+    <!--
     <div class="container text-center">
         <form action="{{url_for('createAsset')}}" class="form-inline my-2 my-lg-0">
             <button class="btn btn-info my-2 my-sm-0 text" type="submit">Create Asset</button>
-        </form>
-    </div>
-
+        </form> -->
+</body>
 {% endblock %}
