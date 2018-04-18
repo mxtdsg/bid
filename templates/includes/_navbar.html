@@ -82,12 +82,12 @@ li a:current {
        <ul>         
          <li><img src="/static/images/logo_sgc.png"></li>
          <li><b><p style="font-size:30px; color: white; padding-left : 10px; margin-top :10px; text-align:center">SGC</p></b></li>
-          <a href="/"><li>Gamebook</a></li>
+          <a href="/"><li style="margin-left: 20px">Gamebook</a></li>
       {% if g.user %}
 <!--         <li class="nav-item active">
           <a class="nav-link" href="/play">Play <span class="sr-only">(current)</span></a>
         </li> -->
-        <li><a href="/gamerboard"> Gamerbook</a></li>
+        <li ><a href="/gamerboard"> Gamerbook</a></li>
        <li><a  href="/market">Influencerbook</a></li>
        <li><a href="/leaderboard">Investorbook</a></li>
         
@@ -95,7 +95,7 @@ li a:current {
       {% if not g.user %}
       <a href="/">Sign in</a>
       {% else %}
-      <a href="/profile"><img src="/static/images/logo_user.png" style="height:50px; width:50px; margin-left: 350px" align="right"></a>
+      <a href="/profile"><img src="/static/images/logo_user.png" style="height:50px; width:50px; margin-left: 320px" align="right"></a>
       {% endif %}
    <a href="/logout">
   <div class="container" onclick="myFunction(this)" align="right">
