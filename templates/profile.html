@@ -42,6 +42,7 @@ div.gallery:hover {
                     <img src="/static/images/{{cat.name}}.jpg" style="height:225px;width:100%; display:block;" alt="Cat">
   <p style="color:black; font-size:20px; margin: 5px; padding-left: 10px" >{{cat.name}}</p>
                         <p style="color:black;font-size:20px; margin: 0px; padding-left: 14px"><img src="/static/images/logo_sgc.png" style="height:20px;width:20px">  {{cat.price}}</p>
+                         <p style="color:black; font-size:20px; margin: 5px; padding-left: 10px" >My share</p>
                         {% for user in users %}
                          <p style="color:black; font-size:15px; margin: 5px; padding-left: 10px">{{user.username}}</p>
                          {% endfor %}
