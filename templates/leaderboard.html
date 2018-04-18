@@ -1,34 +1,33 @@
 {% extends 'layout.html' %}
 {% block body %}
-    <div class="jumbotron text-center">
-        <h1>Leaderboard</h1>
-        <!-- <h2>{{g.user}}</h2> -->
-        <!-- <p class="lead">Market</p> -->
-    </div>
+<body style="background-color:#d9d9d9;">
+    <div class="container" style="background-color: white; width: 1150px">
    <table class="table">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Picture</th>
                 <th scope="col">Game</th>
                  <th scope="col">Price</th>
                 <th scope="col">Owner</th>
-                <th scope="col">Bio</th>
+                <th scope="col">Description</th>
             </tr>
         </thead>
         <tbody>
                 <tr>
                     {% for cat in cats %}
                 <a href="/cat/{{cat.id}}">
-                     <td> <img src="/static/images/{{cat.name}}.jpg" style="height:120px;width:120px; display:block;" alt="Cat"></td>
+                     <td> <img src="/static/images/{{cat.name}}.jpg" style="height:50px;width:50px; display:block;" alt="Cat"></td>
                        <th scope="col">{{cat.name}}</th>
-                         <th scope="col" style="color:green">$ {{cat.price}}</th>
-                         <th scope="col" style="color:red"> {{cat.owner}}</th>
-                         <th scope="col" style="color:grey">{{cat.description}}</th></a>
+                         <th scope="col" style="color:black"><img src="/static/images/logo_sgc.png" style="height:20px;width:20px">   {{cat.price}}</th>
+                         <th scope="col" style="color:black"> {{cat.owner}}</th>
+                         <th scope="col" style="color:black">{{cat.description}}</th></a>
                           </tr>
             {% endfor %}
                
         </tbody>
     </table>
+</div>
+</body>
   <br>
 
 

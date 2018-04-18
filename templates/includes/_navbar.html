@@ -32,7 +32,7 @@ li a {
     display:block;
     color:#828282;
     text-align: center;
-    font-size: 18px;
+    font-size: 20px;
     padding: 20px 10px;
     text-decoration: none;
 
@@ -75,7 +75,7 @@ li a:current {
 
 <body>
 	<div class="center">
-<nav role="main">
+<nav>
        <ul>       	
          <li><img src="/static/images/logo_sgc.png"></li>
          <li><b><p style="font-size:30px; color: white; padding-left : 10px; margin-top :10px; text-align:center">SGC</p></b></li>
@@ -99,15 +99,18 @@ li a:current {
   <div class="bar1"></div>
   <div class="bar2"></div>
   <div class="bar3"></div></a>
+</ul>
 </nav>
 
-<nav role="sub">
-  
+<nav>
+  <div class="container" style="background-color: white; height: 50px; width: 1200px; margin-top: -10px" >
       {% if g.user %}
-        <a  href="/market">Market</a>
-        <a href="/leaderboard">Leaderboard</a>
-        <a href="/gamerboard">Gamerboard</a>
+        <a  href="/market" style="color:black; font-size: 18px">Market</a>
+        <a href="/leaderboard" style="color:black; font-size: 18px; padding-left: 20px" >Leaderboard</a>
+        <a href="/gamerboard" style="color:black; font-size: 18px; padding-left: 20px">Gamerboard</a>
+        <a href="/profile" style="color:black; font-size: 18px; padding-left: 20px">My Games</a>
       {% endif %}
+  </div>
 </nav>
 
 
