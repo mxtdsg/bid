@@ -1,7 +1,17 @@
 {% extends 'layout.html' %}
 {% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.container{
+    margin: 20px auto;
+    width: 1150px;
+}
+</style>
+</head>
 <body style="background-color:#d9d9d9;">
-    <div class="container" style="background-color: white">
+    <div class="container" style="background-color: white;width: 1150px;margin-left: -20px">
    <table class="table">
         <thead>
             <tr>
@@ -14,7 +24,7 @@
                 <tr>
                     {% for user in users %}
                          <th scope="col" style="color:black"> {{user.username}}</th>
-                         <th scope="col" style="color:green">$ {{user.balance}}</th>
+                         <th scope="col" style="color:black"><img src="/static/images/logo_sgc.png" style="height:20px;width:20px"> {{user.balance}}</th>
                          {% for cat in assets[user.username] %}
                          <td> <img src="/static/images/{{cat.name}}.jpg" style="height:120px;width:120px; display:block;" alt="Cat">{{cat.name}}</td>
                           {% endfor %}
@@ -26,5 +36,5 @@
     </div>
 </body>
   <br>
- 
+ </html>
 {% endblock %}

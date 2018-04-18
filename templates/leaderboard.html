@@ -1,7 +1,17 @@
 {% extends 'layout.html' %}
 {% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.container{
+    margin: 20px auto;
+    width: 1150px;
+}
+</style>
+</head>
 <body style="background-color:#d9d9d9;">
-    <div class="container" style="background-color: white; width: 1150px">
+    <div class="container" style="background-color: white; width: 1200px; margin-left: -20px">
    <table class="table">
         <thead>
             <tr>
@@ -16,7 +26,7 @@
                 <tr>
                     {% for cat in cats %}
                 <a href="/cat/{{cat.id}}">
-                     <td> <img src="/static/images/{{cat.name}}.jpg" style="height:50px;width:50px; display:block;" alt="Cat"></td>
+                     <td> <img src="/static/images/{{cat.name}}.jpg" style="height:50px; width:50px; display:block;" alt="Cat"></td>
                        <th scope="col">{{cat.name}}</th>
                          <th scope="col" style="color:black"><img src="/static/images/logo_sgc.png" style="height:20px;width:20px">   {{cat.price}}</th>
                          <th scope="col" style="color:black"> {{cat.owner}}</th>
@@ -29,6 +39,6 @@
 </div>
 </body>
   <br>
-
+</html>
 
 {% endblock %}
