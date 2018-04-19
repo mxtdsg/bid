@@ -72,6 +72,9 @@ li a:current {
     transform: rotate(45deg) translate(-8px, -8px);
 }
 
+ .current{
+	color: white;
+}
 </style>
 </head>
 
@@ -82,20 +85,20 @@ li a:current {
        <ul>         
          <li><img src="/static/images/logo_sgc.png"></li>
          <li><b><p style="font-size:30px; color: white; padding-left : 10px; margin-top :10px; text-align:center">SGC</p></b></li>
-          <a href="/"><li style="margin-left: 20px" >Gamebook</a></li>
+          <li><a class="current" href="/" ><li style="margin-left: 15px" >Gamebook</a></li>
       {% if g.user %}
 <!--         <li class="nav-item active">
           <a class="nav-link" href="/play">Play <span class="sr-only">(current)</span></a>
         </li> -->
-        <li ><a href="/gamerboard"> Gamerbook</a></li>
-       <li><a  href="/market">Influencerbook</a></li>
-       <li><a href="/leaderboard">Investorbook</a></li>
+        <li ><a class="current" href="/gamerboard" > Gamerbook</a></li>
+       <li><a class="current" href="/market">Influencerbook</a></li>
+       <li><a class="current" href="/leaderboard">Investorbook</a></li>
         
       {% endif %}
       {% if not g.user %}
       <a href="/">Sign in</a>
       {% else %}
-      <a href="/profile"><img src="/static/images/logo_user.png" style="height:50px; width:50px; margin-left: 380px" align="right"></a>
+      <a href="/profile"><img src="/static/images/logo_user.png" style="height:50px; width:50px; margin-left: 360px" align="right"></a>
       {% endif %}
    <a href="/logout">
   <div class="container" onclick="myFunction(this)" align="right">
