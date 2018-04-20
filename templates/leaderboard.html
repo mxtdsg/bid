@@ -11,15 +11,21 @@
 </style>
 </head>
 <body style="background-color:#d9d9d9;">
-    <div class="container" style="background-color: white; margin-left: -20px;font:Arial; font-size: 16px">
+    <div style="background-color: white; height: 50px;line-height: 50px; width: 1150px; margin-left: -20px;margin-top: -20px" >
+      {% if g.user %}
+        <a  href="/market" style="color:black; font-size: 16px; padding-left: 20px">Lgendary Owners</a>
+        <a href="/leaderboard" style="color:black; font-size: 16px; padding-left: 20px" > Top games</a>
+      {% endif %}
+  </div>
+    <div class="container" style="background-color: white; margin-left: -20px;font:Arial; font-size: 18px">
    <table class="table">
         <thead>
             <tr>
-                <th scope="col">Picture</th>
-                <th scope="col">Game</th>
-                 <th scope="col">Totoal Value</th>
-                <th scope="col">Owner</th>
-                <th scope="col">Description</th>
+                <th scope="col" style="font-weight: 50">Picture</th>
+                <th scope="col" style="font-weight: 50">Game</th>
+                 <th scope="col" style="font-weight: 50">Totoal Value</th>
+                <th scope="col" style="font-weight: 50">Likes</th>
+                <th scope="col" style="font-weight: 50">Description</th>
             </tr>
         </thead>
         <tbody>
@@ -27,10 +33,10 @@
                     {% for cat in cats %}
                 <a href="/cat/{{cat.id}}">
                      <td> <img src="/static/images/{{cat.name}}.jpg" style="height:50px; width:50px; display:block;" alt="Cat"></td>
-                       <th scope="col">{{cat.name}}</th>
-                         <th scope="col" style="color:black"><img src="/static/images/logo_sgc.png" style="height:20px;width:20px">   {{cat.price}}</th>
-                         <th scope="col" style="color:black"> {{cat.owner}}</th>
-                         <th scope="col" style="color:black">{{cat.description}}</th></a>
+                       <th scope="col" style="font-weight: 50">{{cat.name}}</th>
+                         <th scope="col" style="color:black; font-weight: 50"><img src="/static/images/logo_sgc.png" style="height:20px;width:20px">   {{cat.price}}</th>
+                         <th scope="col" style="color:black; font-weight: 50"> {{cat.owner}}000K</th>
+                         <th scope="col" style="color:black; font-weight: 50">{{cat.description}}</th></a>
                           </tr>
             {% endfor %}
                
